@@ -74,15 +74,13 @@ function s:draw()
 		end
 		
 		local x, y	= position.x, position.y
-		x, y		= x + love.graphics.getWidth() / 2, y + love.graphics.getHeight() / 2
 		x, y		= x - sprite.width * sprite.anchorX, y - sprite.height * sprite.anchorY
 		x, y		= math.floor(x), math.floor(y)
 		
 		love.graphics.push()
 		love.graphics.setColor(255, 255, 255, sprite.opacity)
-		love.graphics.translate(x + sprite.halfWidth, y + sprite.halfHeight)
+		love.graphics.translate(x, y)
 		love.graphics.scale(sprite.scaleX, sprite.scaleY)
-		love.graphics.translate(-sprite.halfWidth, -sprite.halfHeight)
 		love.graphics.draw(unpack(args))
 		love.graphics.pop()
 	end
