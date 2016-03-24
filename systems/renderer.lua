@@ -122,10 +122,15 @@ function s:loadTexture(name)
 				end
 			end
 			
-			texture.anims = meta.anims or (#texture.frames > 0 and { default = { 1 } } or nil)
+			texture.anims = meta.anims
 			texture.anim = meta.anim
 			
-			if not texture.anim then
+			if not texture.anims and #texture.frames > 0 then
+				texture.anims = {}
+				for i = 1, #texture.frames do
+					texture.anims[i] = { i }
+				end
+			elseif not texture.anim then
 				for k, v in pairs(texture.anims) do
 					texture.anim = k
 					break
