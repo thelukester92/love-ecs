@@ -106,11 +106,12 @@ function s:loadTexture(name)
 			local w, h = texture.image:getDimensions()
 			
 			texture.frames = {}
+			
 			if meta.frames then
 				for _, rect in pairs(meta.frames) do
 					table.insert(texture.frames, love.graphics.newQuad(rect.x, rect.y, rect.w, rect.h, w, h))
 				end
-			else if meta.tileWidth and meta.tileHeight then
+			elseif meta.tileWidth and meta.tileHeight then
 				local rows = w / meta.tileWidth
 				local cols = h / meta.tileHeight
 				for i in 1, rows do
