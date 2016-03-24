@@ -14,6 +14,7 @@ setmetatable(c, comp)
 --		anchorY: number			defaults to 0
 --		scaleX: number			defaults to 1
 --		scaleY: number			defaults to scaleX
+--		delay: number			defaults to 5
 
 function c:init(arg, args)
 	args				= args or {}
@@ -24,12 +25,11 @@ function c:init(arg, args)
 	self.anchorY		= args.anchorY or 0
 	self.scaleX			= args.scaleX or 1
 	self.scaleY			= args.scaleY or self.scaleX
-	self.transformFace	= args.transformFace or nil
 	
 	-- for animatable sprites only
 	self.frameIdx		= 1
-	self.delay			= 5
-	self.delayDef		= 5
+	self.delayDef		= args.delay or 5
+	self.delay			= self.delayDef
 	
 	-- for transformable sprites only
 	self.meshVertices	= nil
