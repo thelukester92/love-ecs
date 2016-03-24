@@ -103,10 +103,22 @@ function s:loadTexture(name)
 		
 		pcall(function()
 			local meta = love.filesystem.load("resources/" .. name .. ".lua")()
+			local w, h = texture.image:getDimensions()
 			
 			texture.frames = {}
-			for _, rect in pairs(meta.frames) do
-				table.insert(texture.frames, love.graphics.newQuad(rect.x, rect.y, rect.w, rect.h, texture.image:getDimensions()))
+			if meta.frames then
+				for _, rect in pairs(meta.frames) do
+					table.insert(texture.frames, love.graphics.newQuad(rect.x, rect.y, rect.w, rect.h, w, h))
+				end
+			else if meta.tileWidth and meta.tileHeight then
+				local rows = w / meta.tileWidth
+				local cols = h / meta.tileHeight
+				for i in 1, rows do
+					for j in 1, cols do
+						local r, c = i - 1, j - 1
+						table.insert(texture.frames, love.graphics.newQuad(c * meta.tileWidth, r * meta.tileHeight, meta.tileWidth, meta.tileHeight, w, h))
+					end
+				end
 			end
 			
 			texture.anims = meta.anims
