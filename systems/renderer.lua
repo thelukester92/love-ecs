@@ -114,8 +114,8 @@ function s:loadTexture(name)
 			elseif meta.tileWidth and meta.tileHeight then
 				local rows = w / meta.tileWidth
 				local cols = h / meta.tileHeight
-				for i in 1, rows do
-					for j in 1, cols do
+				for i = 1, rows do
+					for j = 1, cols do
 						local r, c = i - 1, j - 1
 						table.insert(texture.frames, love.graphics.newQuad(c * meta.tileWidth, r * meta.tileHeight, meta.tileWidth, meta.tileHeight, w, h))
 					end
