@@ -130,10 +130,14 @@ function s:loadTexture(name)
 			texture.anims = meta.anims
 			texture.anim = meta.anim
 			
+			-- todo: determine if this causes things that shouldn't be animated to be treated as animated
 			if not texture.anims and #texture.frames > 0 then
 				texture.anims = {}
 				for i = 1, #texture.frames do
 					texture.anims[i] = { i }
+				end
+				if not texture.anim then
+					texture.anim = 1
 				end
 			elseif not texture.anim then
 				for k, v in pairs(texture.anims) do
