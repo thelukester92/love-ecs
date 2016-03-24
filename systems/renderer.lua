@@ -122,7 +122,7 @@ function s:loadTexture(name)
 				end
 			end
 			
-			texture.anims = meta.anims
+			texture.anims = meta.anims or (#texture.frames > 0 and { default = { 1 } } or nil)
 			texture.anim = meta.anim
 			
 			if not texture.anim then
