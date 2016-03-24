@@ -42,6 +42,11 @@ function s:acceptedEntityAdded(e)
 	if sprite.texture.anims then
 		sprite.anim		= sprite.texture.anim
 		sprite.prevAnim	= sprite.texture.anim
+		
+		print(sprite.frameIdx)
+		print(sprite.texture.anims[sprite.anim])
+		print(sprite.texture.anims[sprite.anim][sprite.frameIdx])
+		
 		sprite.frame	= sprite.texture.frames[sprite.texture.anims[sprite.anim][sprite.frameIdx]]
 		table.insert(self.animatables, e)
 	end
