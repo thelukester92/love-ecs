@@ -6,9 +6,10 @@
 --		that contain components relevant to the system.
 --		The acceptedEntityAdded method can be used to
 --		process entities as they are accepted.
---		The acceptedEntityAdded method must not be used if
---		the system requires components that must be
---		initialized by other systems first (i.e. sprites)
+--		If the system requires components that must be
+--		initialized by other systems first (i.e. sprites),
+--		acceptedEntityAdded should not be used or should be
+--		wrapped in an "if initialized"
 
 local sys = {}
 sys.__index = sys
