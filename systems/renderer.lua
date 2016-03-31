@@ -112,12 +112,16 @@ function s:loadTexture(name)
 					table.insert(texture.frames, love.graphics.newQuad(rect.x, rect.y, rect.w, rect.h, w, h))
 				end
 			elseif meta.tileWidth and meta.tileHeight then
-				local rows = h / meta.tileHeight
-				local cols = w / meta.tileWidth
+				local padding = meta.padding or 0
+				local tHeight = meta.tileHeight + padding
+				local tWidth = meta.tileWidth + padding
+				
+				local rows = h / tHeight
+				local cols = w / tWidth
 				for i = 1, rows do
 					for j = 1, cols do
 						local r, c = i - 1, j - 1
-						table.insert(texture.frames, love.graphics.newQuad(c * meta.tileWidth, r * meta.tileHeight, meta.tileWidth, meta.tileHeight, w, h))
+						table.insert(texture.frames, love.graphics.newQuad(c * tWidth, r * tHeight, meta.tileWidth, meta.tileHeight, w, h))
 					end
 				end
 			end
