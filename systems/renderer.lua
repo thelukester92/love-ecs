@@ -40,6 +40,7 @@ function s:acceptedEntityAdded(e)
 	
 	-- get sprite anims
 	if sprite.texture.anims then
+		sprite.delayDef	= sprite.texture.delay or sprite.delayDef
 		sprite.anim		= sprite.texture.anim
 		sprite.prevAnim	= sprite.texture.anim
 		sprite.frame	= sprite.texture.frames[sprite.texture.anims[sprite.anim][sprite.frameIdx]]
@@ -101,10 +102,11 @@ function s:loadTexture(name)
 		-- if the following pcall fails, no metadata exists for this texture
 		-- and the entire image is used rather than treating it as a spritesheet
 		
-		pcall(function()
+		--pcall(function()
 			local meta = love.filesystem.load("resources/" .. name .. ".lua")()
 			local w, h = texture.image:getDimensions()
 			
+			texture.delay = meta.delay
 			texture.frames = {}
 			
 			if meta.frames then
@@ -136,7 +138,7 @@ function s:loadTexture(name)
 					break
 				end
 			end
-		end)
+		--end)
 		
 		self.textureCache[name] = texture
 	end
