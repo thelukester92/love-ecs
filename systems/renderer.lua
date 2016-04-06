@@ -102,6 +102,7 @@ end
 function s:loadTexture(name)
 	if self.textureCache[name] == nil then
 		local texture = { image = love.graphics.newImage("resources/" .. name .. ".png") }
+		texture.image:setFilter("nearest")
 		
 		-- if the following pcall fails, no metadata exists for this texture
 		-- and the entire image is used rather than treating it as a spritesheet
