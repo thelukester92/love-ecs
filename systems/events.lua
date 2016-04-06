@@ -51,6 +51,7 @@ function s:acceptedEntityRemoved(e)
 end
 
 function s:update(dt)
+	table.insert(self.queue, EventComp:new("update"))
 	for _, event in pairs(self.queue) do
 		if self.handlers[event.name] then
 			for _, h in pairs(self.handlers[event.name]) do
