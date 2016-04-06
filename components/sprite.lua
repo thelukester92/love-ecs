@@ -21,8 +21,6 @@ function c:init(arg, args)
 	self.arg			= arg
 	self.zIndex			= args.zIndex or 0
 	self.opacity		= args.opacity or 255
-	self.anchorX		= args.anchorX or 0
-	self.anchorY		= args.anchorY or 0
 	self.scaleX			= args.scaleX or 1
 	self.scaleY			= args.scaleY or self.scaleX
 	

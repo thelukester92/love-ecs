@@ -42,7 +42,7 @@ function s:acceptedEntityAdded(e)
 	if sprite.texture.anims then
 		sprite.delayDef	= sprite.texture.delay or sprite.delayDef
 		sprite.anim		= sprite.texture.anim
-		sprite.prevAnim	= sprite.texture.anim
+		sprite.prevAnim	= nil
 		sprite.frame	= sprite.texture.frames[sprite.texture.anims[sprite.anim][sprite.frameIdx]]
 		table.insert(self.animatables, e)
 	end
@@ -74,14 +74,18 @@ function s:draw()
 			table.insert(args, 2, sprite.frame)
 		end
 		
-		local x, y	= position.x, position.y
-		x, y		= x - sprite.width * sprite.anchorX, y - sprite.height * sprite.anchorY
-		x, y		= math.floor(x), math.floor(y)
+		local x, y = position.x, position.y
+		if sprite.scaleX == -1 then
+			x = x + sprite.width
+		end
+		x, y = math.floor(x), math.floor(y)
 		
 		love.graphics.push()
 		love.graphics.setColor(255, 255, 255, sprite.opacity)
+		
 		love.graphics.translate(x, y)
 		love.graphics.scale(sprite.scaleX, sprite.scaleY)
+		
 		love.graphics.draw(unpack(args))
 		love.graphics.pop()
 	end
@@ -102,7 +106,7 @@ function s:loadTexture(name)
 		-- if the following pcall fails, no metadata exists for this texture
 		-- and the entire image is used rather than treating it as a spritesheet
 		
-		--pcall(function()
+		pcall(function()
 			local meta = love.filesystem.load("resources/" .. name .. ".lua")()
 			local w, h = texture.image:getDimensions()
 			
@@ -138,7 +142,7 @@ function s:loadTexture(name)
 					break
 				end
 			end
-		--end)
+		end)
 		
 		self.textureCache[name] = texture
 	end
@@ -149,8 +153,9 @@ function s:updateFrame(e)
 	local sprite = e:get(SpriteComp:type())
 	
 	if sprite.anim ~= sprite.prevAnim then
-		sprite.delay = sprite.delayDef
-		sprite.frameIdx = 1
+		sprite.delay	= sprite.delayDef
+		sprite.frameIdx	= 1
+		sprite.scaleX	= sprite.texture.anims[sprite.anim].scaleX or 1
 	end
 	
 	sprite.delay = sprite.delay - 1
