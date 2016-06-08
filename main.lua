@@ -1,3 +1,6 @@
+-- Copyright (C) 2016 Luke Godfrey
+-- All Rights Reserved
+
 local GameScene = require "scenes.game"
 
 local g
