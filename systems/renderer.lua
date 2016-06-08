@@ -38,13 +38,15 @@ function s:acceptedEntityAdded(e)
 		sprite.texture = self:loadTexture(sprite.name)
 	end
 	
-	-- get sprite anims
+	-- get sprite anims or frames
 	if sprite.texture.anims then
 		sprite.delayDef	= sprite.texture.delay or sprite.delayDef
 		sprite.anim		= sprite.texture.anim
 		sprite.prevAnim	= nil
 		sprite.frame	= sprite.texture.frames[sprite.texture.anims[sprite.anim][sprite.frameIdx]]
 		table.insert(self.animatables, e)
+	elseif sprite.texture.frames then
+		sprite.frame	= sprite.texture.frames[1]
 	end
 	
 	-- get sprite size
@@ -112,13 +114,15 @@ function s:loadTexture(name)
 			local w, h = texture.image:getDimensions()
 			
 			texture.delay = meta.delay
-			texture.frames = {}
 			
 			if meta.frames then
+				texture.frames = {}
 				for _, rect in pairs(meta.frames) do
 					table.insert(texture.frames, love.graphics.newQuad(rect.x, rect.y, rect.w, rect.h, w, h))
 				end
 			elseif meta.tileWidth and meta.tileHeight then
+				texture.frames = {}
+				
 				local padding = meta.padding or 0
 				local tHeight = meta.tileHeight + padding
 				local tWidth = meta.tileWidth + padding
